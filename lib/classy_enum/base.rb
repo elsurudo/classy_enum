@@ -7,6 +7,7 @@ module ClassyEnum
     include Predicate
     include Translation
     include Collection
+    include Generation
 
     class_attribute :base_class
     attr_accessor :owner, :serialize_as_json, :allow_blank
