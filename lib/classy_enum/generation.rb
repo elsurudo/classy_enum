@@ -14,15 +14,19 @@ module ClassyEnum
 
       		# Must define the class non-anonymously, so superclass' 'inherited' hook gets class name
       		eval %Q{
-      	  class #{self.to_s}::#{class_name} <  #{self.to_s}
-      		end
-      	}
+        	  class #{self.to_s}::#{class_name} <  #{self.to_s}
+        		end
+      	  }
+      	  
+      	  klass = self.const_get(class_name)
 
-      		self.const_get(class_name).class_eval do
+      		klass.class_eval do
       			define_method :value do
       				num
       			end
       		end
+      		
+      		yield(klass, num) if block_given?
       	end
       end
       
